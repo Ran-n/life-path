@@ -83,7 +83,15 @@
     return !!global.I18N.strings[code];
   }
 
+  // breren.com hands off the visitor's current language via ?lang= when
+  // linking here, since a plain top-level navigation can't carry a
+  // postMessage the way the vitralis/licenses iframes do.
   function detectLang() {
+    var fromQuery = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
+    if (fromQuery && isLoaded(fromQuery)) {
+      localStorage.setItem(STORAGE_LANG, fromQuery);
+      return fromQuery;
+    }
     var stored = localStorage.getItem(STORAGE_LANG);
     if (stored && isLoaded(stored)) return stored;
     var candidates = navigator.languages || [navigator.language || 'en'];
@@ -92,6 +100,18 @@
       if (isLoaded(code)) return code;
     }
     return 'en';
+  }
+
+  // Drops ?lang=&theme= from the URL once applied, so they don't linger in
+  // the address bar or get bookmarked/shared with a stale snapshot baked in.
+  function stripHandoffParams() {
+    var params = new URLSearchParams(location.search);
+    if (!params.has('lang') && !params.has('theme')) return;
+    params.delete('lang');
+    params.delete('theme');
+    var qs = params.toString();
+    var newUrl = location.pathname + (qs ? '?' + qs : '') + location.hash;
+    window.history.replaceState(null, '', newUrl);
   }
 
   function applyDirection(code) {
@@ -198,14 +218,31 @@
     }
   }
 
+  // Mirrors theme.js's tagOutboundLinks() but for ?lang= - kept separate
+  // since theme.js runs (and tags ?theme=) before I18N.init() has picked a
+  // language. URL.searchParams.set only touches its own key, so the two
+  // tags layer onto the same href without clobbering each other.
+  function tagOutboundLinks(lang) {
+    document.querySelectorAll('a.topbar-logo').forEach(function (a) {
+      try {
+        var url = new URL(a.href, location.href);
+        url.searchParams.set('lang', lang);
+        a.href = url.toString();
+      } catch (e) { /* malformed href, leave untouched */ }
+    });
+  }
+
   // Call once markup is in place. `render` is invoked immediately and again
   // on every language change.
   function init(render) {
     currentLang = detectLang();
     document.documentElement.lang = currentLang;
     applyDirection(currentLang);
+    stripHandoffParams();
+    tagOutboundLinks(currentLang);
     setupLangPicker(function (code) {
       document.documentElement.lang = code;
+      tagOutboundLinks(code);
       render();
     });
     render();
