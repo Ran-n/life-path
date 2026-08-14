@@ -8,6 +8,8 @@ window.I18N.strings.te = {
   dialAriaLabel: "పూర్తి చక్రం మార్గదర్శకం చూడండి",
   dobLabel: "జన్మతేదీ",
   dobClear: "తొలగించు",
+  themeToLight: "లైట్ మోడ్‌కి మార్చండి",
+  themeToDark: "డార్క్ మోడ్‌కి మార్చండి",
   yearFieldLabel: "సంవత్సరం",
   monthFieldLabel: "నెల",
   dayFieldLabel: "రోజు",

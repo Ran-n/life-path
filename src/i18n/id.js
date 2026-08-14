@@ -8,6 +8,8 @@ window.I18N.strings.id = {
   dialAriaLabel: "Lihat panduan lingkaran penuh",
   dobLabel: "Tanggal lahir",
   dobClear: "Hapus",
+  themeToLight: "Beralih ke mode terang",
+  themeToDark: "Beralih ke mode gelap",
   yearFieldLabel: "Tahun",
   monthFieldLabel: "Bulan",
   dayFieldLabel: "Hari",

@@ -8,6 +8,8 @@ window.I18N.strings.bn = {
   dialAriaLabel: "পুরো ডায়াল গাইড দেখুন",
   dobLabel: "জন্ম তারিখ",
   dobClear: "মুছুন",
+  themeToLight: "লাইট মোডে যান",
+  themeToDark: "ডার্ক মোডে যান",
   yearFieldLabel: "বছর",
   monthFieldLabel: "মাস",
   dayFieldLabel: "দিন",

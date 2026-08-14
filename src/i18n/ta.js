@@ -8,6 +8,8 @@ window.I18N.strings.ta = {
   dialAriaLabel: "முழு சக்கர வழிகாட்டியைப் பாருங்கள்",
   dobLabel: "பிறந்த தேதி",
   dobClear: "அழி",
+  themeToLight: "லைட் மோடிற்கு மாறவும்",
+  themeToDark: "டார்க் மோடிற்கு மாறவும்",
   yearFieldLabel: "ஆண்டு",
   monthFieldLabel: "மாதம்",
   dayFieldLabel: "நாள்",

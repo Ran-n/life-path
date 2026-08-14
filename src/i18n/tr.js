@@ -8,6 +8,8 @@ window.I18N.strings.tr = {
   dialAriaLabel: "Tam kadran rehberini görüntüle",
   dobLabel: "Doğum tarihi",
   dobClear: "Temizle",
+  themeToLight: "Açık moda geç",
+  themeToDark: "Koyu moda geç",
   yearFieldLabel: "Yıl",
   monthFieldLabel: "Ay",
   dayFieldLabel: "Gün",

@@ -8,6 +8,8 @@ window.I18N.strings.ko = {
   dialAriaLabel: "전체 다이얼 가이드 보기",
   dobLabel: "생년월일",
   dobClear: "지우기",
+  themeToLight: "라이트 모드로 전환",
+  themeToDark: "다크 모드로 전환",
   yearFieldLabel: "년",
   monthFieldLabel: "월",
   dayFieldLabel: "일",

@@ -8,6 +8,8 @@ window.I18N.strings.pt = {
   dialAriaLabel: "Ver o guia completo do mostrador",
   dobLabel: "Data de nascimento",
   dobClear: "Limpar",
+  themeToLight: "Mudar para modo claro",
+  themeToDark: "Mudar para modo escuro",
   yearFieldLabel: "Ano",
   monthFieldLabel: "Mês",
   dayFieldLabel: "Dia",

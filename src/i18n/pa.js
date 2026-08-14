@@ -8,6 +8,8 @@ window.I18N.strings.pa = {
   dialAriaLabel: "ਪੂਰੀ ਚੱਕਰ ਮਾਰਗਦਰਸ਼ਿਕਾ ਦੇਖੋ",
   dobLabel: "ਜਨਮ ਤਾਰੀਖ਼",
   dobClear: "ਮਿਟਾਓ",
+  themeToLight: "ਲਾਈਟ ਮੋਡ ਵਿੱਚ ਬਦਲੋ",
+  themeToDark: "ਡਾਰਕ ਮੋਡ ਵਿੱਚ ਬਦਲੋ",
   yearFieldLabel: "ਸਾਲ",
   monthFieldLabel: "ਮਹੀਨਾ",
   dayFieldLabel: "ਦਿਨ",

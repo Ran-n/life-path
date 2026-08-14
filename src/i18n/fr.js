@@ -8,6 +8,8 @@ window.I18N.strings.fr = {
   dialAriaLabel: "Voir le guide complet du cadran",
   dobLabel: "Date de naissance",
   dobClear: "Effacer",
+  themeToLight: "Passer au mode clair",
+  themeToDark: "Passer au mode sombre",
   yearFieldLabel: "Année",
   monthFieldLabel: "Mois",
   dayFieldLabel: "Jour",

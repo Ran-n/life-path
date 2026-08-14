@@ -8,6 +8,8 @@ window.I18N.strings.th = {
   dialAriaLabel: "ดูคู่มือหน้าปัดทั้งหมด",
   dobLabel: "วันเกิด",
   dobClear: "ล้าง",
+  themeToLight: "เปลี่ยนเป็นโหมดสว่าง",
+  themeToDark: "เปลี่ยนเป็นโหมดมืด",
   yearFieldLabel: "ปี",
   monthFieldLabel: "เดือน",
   dayFieldLabel: "วัน",

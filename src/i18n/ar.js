@@ -8,6 +8,8 @@ window.I18N.strings.ar = {
   dialAriaLabel: "عرض دليل الدائرة الكاملة",
   dobLabel: "تاريخ الميلاد",
   dobClear: "مسح",
+  themeToLight: "التبديل إلى الوضع الفاتح",
+  themeToDark: "التبديل إلى الوضع الداكن",
   yearFieldLabel: "السنة",
   monthFieldLabel: "الشهر",
   dayFieldLabel: "اليوم",

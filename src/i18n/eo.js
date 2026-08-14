@@ -8,6 +8,8 @@ window.I18N.strings.eo = {
   dialAriaLabel: "Vidu la plenan ciferplat-gvidiston",
   dobLabel: "Naskiĝdato",
   dobClear: "Forviŝi",
+  themeToLight: "Ŝanĝi al luma reĝimo",
+  themeToDark: "Ŝanĝi al malluma reĝimo",
   yearFieldLabel: "Jaro",
   monthFieldLabel: "Monato",
   dayFieldLabel: "Tago",

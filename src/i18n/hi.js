@@ -8,6 +8,8 @@ window.I18N.strings.hi = {
   dialAriaLabel: "पूरा चक्र मार्गदर्शिका देखें",
   dobLabel: "जन्म तिथि",
   dobClear: "मिटाएँ",
+  themeToLight: "लाइट मोड में बदलें",
+  themeToDark: "डार्क मोड में बदलें",
   yearFieldLabel: "वर्ष",
   monthFieldLabel: "महीना",
   dayFieldLabel: "दिन",

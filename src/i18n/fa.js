@@ -8,6 +8,8 @@ window.I18N.strings.fa = {
   dialAriaLabel: "راهنمای کامل صفحه را ببین",
   dobLabel: "تاریخ تولد",
   dobClear: "پاک کردن",
+  themeToLight: "تغییر به حالت روشن",
+  themeToDark: "تغییر به حالت تیره",
   yearFieldLabel: "سال",
   monthFieldLabel: "ماه",
   dayFieldLabel: "روز",

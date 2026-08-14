@@ -8,6 +8,8 @@ window.I18N.strings.ru = {
   dialAriaLabel: "Открыть полное руководство по циферблату",
   dobLabel: "Дата рождения",
   dobClear: "Очистить",
+  themeToLight: "Переключить на светлую тему",
+  themeToDark: "Переключить на тёмную тему",
   yearFieldLabel: "Год",
   monthFieldLabel: "Месяц",
   dayFieldLabel: "День",

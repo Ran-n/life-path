@@ -8,6 +8,8 @@ window.I18N.strings.sw = {
   dialAriaLabel: "Tazama mwongozo kamili wa dial",
   dobLabel: "Tarehe ya kuzaliwa",
   dobClear: "Futa",
+  themeToLight: "Badilisha kuwa hali nyepesi",
+  themeToDark: "Badilisha kuwa hali ya giza",
   yearFieldLabel: "Mwaka",
   monthFieldLabel: "Mwezi",
   dayFieldLabel: "Siku",

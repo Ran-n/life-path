@@ -8,6 +8,8 @@ window.I18N.strings.it = {
   dialAriaLabel: "Visualizza la guida completa del quadrante",
   dobLabel: "Data di nascita",
   dobClear: "Cancella",
+  themeToLight: "Passa alla modalità chiara",
+  themeToDark: "Passa alla modalità scura",
   yearFieldLabel: "Anno",
   monthFieldLabel: "Mese",
   dayFieldLabel: "Giorno",

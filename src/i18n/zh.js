@@ -8,6 +8,8 @@ window.I18N.strings.zh = {
   dialAriaLabel: "查看完整命盘指南",
   dobLabel: "出生日期",
   dobClear: "清除",
+  themeToLight: "切换到浅色模式",
+  themeToDark: "切换到深色模式",
   yearFieldLabel: "年",
   monthFieldLabel: "月",
   dayFieldLabel: "日",

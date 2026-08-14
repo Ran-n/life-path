@@ -8,6 +8,8 @@ window.I18N.strings.ja = {
   dialAriaLabel: "ダイヤル完全ガイドを見る",
   dobLabel: "生年月日",
   dobClear: "クリア",
+  themeToLight: "ライトモードに切り替え",
+  themeToDark: "ダークモードに切り替え",
   yearFieldLabel: "年",
   monthFieldLabel: "月",
   dayFieldLabel: "日",

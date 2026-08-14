@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+:root,
+html[data-theme="dark"] {
   --ink-900: #0c0f1c;
   --ink-800: #151a2c;
   --ink-700: #202744;
@@ -10,15 +17,33 @@
   --brass-soft: rgba(205, 161, 90, 0.14);
   --parchment: #efe7d6;
   --muted: #8c93ad;
+  --overlay: rgba(12, 15, 28, 0.85);
+  color-scheme: dark;
+}
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+html[data-theme="light"] {
+  --ink-900: #f6efdc;
+  --ink-800: #fffdf7;
+  --ink-700: #ece0bf;
+  --line: #d9cba0;
+  --brass: #a97a34;
+  --brass-bright: #8a6428;
+  --brass-soft: rgba(169, 122, 52, 0.14);
+  --parchment: #2c2413;
+  --muted: #7c7156;
+  --overlay: rgba(246, 239, 220, 0.9);
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
 
-html { color-scheme: dark; }
+/* Suppresses per-element transitions for one frame during a theme switch so
+   every color on the page flips atomically instead of animating in at
+   whatever rate each element's own transition happens to be set to. */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}
 
 body {
   margin: 0;
@@ -81,8 +106,80 @@ h1 {
   min-height: 34px;
 }
 
-.topbar-spacer {
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex: 1;
+}
+
+.topbar-brand {
+  position: relative;
+  display: inline-flex;
+}
+
+.topbar-logo {
+  display: inline-flex;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+}
+
+.topbar-logo:hover,
+.topbar-logo:focus-visible {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(227, 188, 121, 0.35));
+  transform: scale(1.08);
+}
+
+.topbar-logo:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.topbar-logo-svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.topbar-logo-svg .outer {
+  stroke: var(--parchment);
+  opacity: 0.55;
+}
+
+.topbar-logo-svg .middle {
+  stroke: var(--parchment);
+  opacity: 0.75;
+}
+
+.topbar-logo-svg .inner {
+  stroke: var(--parchment);
+  opacity: 0.95;
+}
+
+.topbar-logo-svg .hut {
+  fill: var(--brass);
+}
+
+.topbar-logo-caption {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 3px;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.topbar-brand:hover .topbar-logo-caption {
+  color: var(--brass-bright);
 }
 
 .topbar-back {
@@ -100,6 +197,35 @@ h1 {
 .topbar-back:focus-visible {
   color: var(--brass-bright);
   border-color: var(--brass);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-btn {
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--parchment);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.theme-btn:hover,
+.theme-btn:focus-visible {
+  border-color: var(--brass);
+  background: var(--brass-soft);
 }
 
 /* Language picker */
@@ -416,7 +542,6 @@ label {
   color: var(--parchment);
   font-family: var(--font-body);
   font-size: 1rem;
-  color-scheme: dark;
   text-align: center;
   transition: border-color 0.2s ease;
 }
@@ -500,7 +625,6 @@ label {
   color: var(--parchment);
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  color-scheme: dark;
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, var(--brass) 50%),
     linear-gradient(135deg, var(--brass) 50%, transparent 50%);
@@ -729,7 +853,7 @@ footer {
   gap: 8px;
   margin-bottom: 28px;
   padding: 12px;
-  background: rgba(12, 15, 28, 0.85);
+  background: var(--overlay);
   backdrop-filter: blur(6px);
   border: 1px solid var(--line);
   border-radius: 6px;

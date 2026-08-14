@@ -8,6 +8,8 @@ window.I18N.strings.vi = {
   dialAriaLabel: "Xem hướng dẫn vòng quay đầy đủ",
   dobLabel: "Ngày sinh",
   dobClear: "Xóa",
+  themeToLight: "Chuyển sang chế độ sáng",
+  themeToDark: "Chuyển sang chế độ tối",
   yearFieldLabel: "Năm",
   monthFieldLabel: "Tháng",
   dayFieldLabel: "Ngày",

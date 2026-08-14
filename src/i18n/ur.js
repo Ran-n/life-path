@@ -8,6 +8,8 @@ window.I18N.strings.ur = {
   dialAriaLabel: "پوری ڈائل گائیڈ دیکھیں",
   dobLabel: "تاریخِ پیدائش",
   dobClear: "صاف کریں",
+  themeToLight: "لائٹ موڈ پر جائیں",
+  themeToDark: "ڈارک موڈ پر جائیں",
   yearFieldLabel: "سال",
   monthFieldLabel: "مہینہ",
   dayFieldLabel: "دن",

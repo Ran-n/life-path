@@ -8,6 +8,8 @@ window.I18N.strings.en = {
   dialAriaLabel: "View the full dial guide",
   dobLabel: "Date of birth",
   dobClear: "Clear",
+  themeToLight: "Switch to light mode",
+  themeToDark: "Switch to dark mode",
   yearFieldLabel: "Year",
   monthFieldLabel: "Month",
   dayFieldLabel: "Day",

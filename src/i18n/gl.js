@@ -8,6 +8,8 @@ window.I18N.strings.gl = {
   dialAriaLabel: "Ver a guía completa do dial",
   dobLabel: "Data de nacemento",
   dobClear: "Borrar",
+  themeToLight: "Cambiar ao modo claro",
+  themeToDark: "Cambiar ao modo escuro",
   yearFieldLabel: "Ano",
   monthFieldLabel: "Mes",
   dayFieldLabel: "Día",

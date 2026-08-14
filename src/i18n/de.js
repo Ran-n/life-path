@@ -8,6 +8,8 @@ window.I18N.strings.de = {
   dialAriaLabel: "Den vollständigen Zifferblatt-Leitfaden anzeigen",
   dobLabel: "Geburtsdatum",
   dobClear: "Löschen",
+  themeToLight: "Zum hellen Modus wechseln",
+  themeToDark: "Zum dunklen Modus wechseln",
   yearFieldLabel: "Jahr",
   monthFieldLabel: "Monat",
   dayFieldLabel: "Tag",
