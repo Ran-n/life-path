@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Path Number Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <span class="topbar-spacer"></span>
+    <div class="lang-picker">
+      <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span class="flag" id="lang-trigger-flag"></span>
+        <span id="lang-trigger-name"></span>
+        <span class="chevron">▾</span>
+      </button>
+      <ul class="lang-menu" id="lang-menu" role="listbox" hidden></ul>
+    </div>
+  </div>
+
+  <span class="eyebrow" id="txtEyebrow"></span>
+  <h1 id="txtTitle"></h1>
+  <p class="subtitle" id="txtSubtitle"></p>
+
+  <a class="dial-wrap dial-link" id="dialWrap" href="numbers.html"></a>
+  <p class="dial-caption"><a href="numbers.html" id="txtDialCaption"></a></p>
+
+  <div class="card">
+    <div class="dob-label-row">
+      <label id="dobLabel"></label>
+      <button type="button" id="dobClear" class="dob-clear" hidden></button>
+    </div>
+    <div class="dob-picker">
+      <div class="dob-row">
+        <div class="dob-field">
+          <input type="number" id="dobYear" aria-labelledby="dobLabel" placeholder="YYYY" autocomplete="off">
+          <span class="dob-field-label" id="txtYearLabel"></span>
+        </div>
+        <div class="dob-field">
+          <input type="text" id="dobMonth" aria-labelledby="dobLabel" placeholder="MM" autocomplete="off">
+          <span class="dob-field-label" id="txtMonthLabel"></span>
+        </div>
+        <div class="dob-field">
+          <input type="number" id="dobDay" aria-labelledby="dobLabel" placeholder="DD" autocomplete="off">
+          <span class="dob-field-label" id="txtDayLabel"></span>
+        </div>
+        <div class="dob-field dob-field-toggle">
+          <button type="button" id="dobTrigger" class="dob-cal-toggle" aria-haspopup="dialog" aria-expanded="false">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 2v2M12 2v2M2.5 6h11M3 3.5h10a1 1 0 0 1 1 1V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span class="dob-field-label" aria-hidden="true">&nbsp;</span>
+        </div>
+      </div>
+
+      <div id="dobPopup" class="dob-popup" role="dialog" aria-label="Choose date of birth" hidden>
+        <div class="dob-popup-jump">
+          <select id="calYear" aria-label="Year"></select>
+          <select id="calMonth" aria-label="Month"></select>
+        </div>
+        <div class="dob-weekdays" id="dobWeekdays"></div>
+        <div id="calGrid" class="dob-grid"></div>
+      </div>
+    </div>
+    <button id="calculate"></button>
+  </div>
+
+  <div class="card" id="result">
+    <div class="number-display">
+      <div class="big" id="number"></div>
+      <div class="title" id="numberTitle"></div>
+    </div>
+    <div class="meaning" id="meaning"></div>
+    <div class="details" id="details"></div>
+    <div class="figures" id="figures"></div>
+    <button class="breakdown-toggle" id="toggleBreakdown"></button>
+    <div class="breakdown" id="breakdown" style="display:none;"></div>
+  </div>
+
+  <footer id="txtFooter"></footer>
+</div>
+
+<script src="data.js"></script>
+<script src="wheel.js"></script>
+<script src="i18n/engine.js"></script>
+<script src="i18n/en.js"></script>
+<script src="i18n/es.js"></script>
+<script src="i18n/gl.js"></script>
+<script src="i18n/zh.js"></script>
+<script src="i18n/hi.js"></script>
+<script src="i18n/ar.js"></script>
+<script src="i18n/fr.js"></script>
+<script src="i18n/bn.js"></script>
+<script src="i18n/pt.js"></script>
+<script src="i18n/ru.js"></script>
+<script src="i18n/ur.js"></script>
+<script src="i18n/id.js"></script>
+<script src="i18n/de.js"></script>
+<script src="i18n/ja.js"></script>
+<script src="i18n/sw.js"></script>
+<script src="i18n/te.js"></script>
+<script src="i18n/tr.js"></script>
+<script src="i18n/ta.js"></script>
+<script src="i18n/vi.js"></script>
+<script src="i18n/ko.js"></script>
+<script src="i18n/it.js"></script>
+<script src="i18n/fa.js"></script>
+<script src="i18n/pa.js"></script>
+<script src="i18n/th.js"></script>
+<script src="i18n/eo.js"></script>
+<script src="people.js"></script>
+<script>
+  function reduce(n, steps) {
+    while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+      const digits = String(n).split('').map(Number);
+      const next = digits.reduce((a, b) => a + b, 0);
+      steps.push(`${digits.join(' + ')} = ${next}`);
+      n = next;
+    }
+    return n;
+  }
+
+  function calculateLifePath(year, month, day) {
+    const steps = [];
+
+    steps.push(`Month: ${month}`);
+    const mSteps = [];
+    const m = reduce(month, mSteps);
+    mSteps.forEach(s => steps.push('  ' + s));
+    steps.push(`  -> ${m}`);
+
+    steps.push(`Day: ${day}`);
+    const dSteps = [];
+    const d = reduce(day, dSteps);
+    dSteps.forEach(s => steps.push('  ' + s));
+    steps.push(`  -> ${d}`);
+
+    steps.push(`Year: ${year}`);
+    const ySteps = [];
+    const y = reduce(year, ySteps);
+    ySteps.forEach(s => steps.push('  ' + s));
+    steps.push(`  -> ${y}`);
+
+    const total = m + d + y;
+    steps.push(`Sum: ${m} + ${d} + ${y} = ${total}`);
+
+    const finalSteps = [];
+    const result = reduce(total, finalSteps);
+    finalSteps.forEach(s => steps.push('  ' + s));
+
+    return { result, breakdown: steps.join('\n') };
+  }
+
+  const dial = buildDial(220);
+  document.getElementById('dialWrap').appendChild(dial);
+
+  const DOB_STORAGE_KEY = 'lifepath-dob';
+  const currentYear = new Date().getFullYear();
+
+  function daysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  const trigger = document.getElementById('dobTrigger');
+  const popup = document.getElementById('dobPopup');
+  const yearSelect = document.getElementById('calYear');
+  const monthSelect = document.getElementById('calMonth');
+  const grid = document.getElementById('calGrid');
+  const yearInput = document.getElementById('dobYear');
+  const monthInput = document.getElementById('dobMonth');
+  const dayInput = document.getElementById('dobDay');
+  const dobClearBtn = document.getElementById('dobClear');
+
+  const yearOpts = [];
+  for (let y = currentYear; y >= 1900; y--) yearOpts.push(y);
+  yearSelect.innerHTML = yearOpts.map(y => `<option value="${y}">${y}</option>`).join('');
+
+  yearInput.min = 1900;
+  yearInput.max = currentYear;
+
+  let viewYear = currentYear - 25;
+  let viewMonth = 0; // 0-11
+
+  function monthNames() {
+    return I18N.t('monthNames');
+  }
+
+  function parseMonth(raw) {
+    const value = String(raw).trim();
+    if (!value) return null;
+    if (/^\d+$/.test(value)) {
+      const n = Number(value);
+      return n >= 1 && n <= 12 ? n : null;
+    }
+    const lower = value.toLowerCase();
+    const idx = monthNames().findIndex(name => name.toLowerCase().startsWith(lower));
+    return idx === -1 ? null : idx + 1;
+  }
+
+  function getSelected() {
+    const year = Number(yearInput.value);
+    const month = parseMonth(monthInput.value);
+    const day = Number(dayInput.value);
+    if (!yearInput.value || year < 1900 || year > currentYear) return null;
+    if (month === null) return null;
+    if (!dayInput.value || day < 1 || day > daysInMonth(year, month)) return null;
+    return { year, month, day };
+  }
+
+  function updateClearVisibility() {
+    dobClearBtn.hidden = !(yearInput.value || monthInput.value || dayInput.value);
+  }
+
+  function saveDob() {
+    const selected = getSelected();
+    if (selected) {
+      localStorage.setItem(DOB_STORAGE_KEY, JSON.stringify(selected));
+    } else if (!yearInput.value && !monthInput.value && !dayInput.value) {
+      localStorage.removeItem(DOB_STORAGE_KEY);
+    }
+  }
+
+  function loadDob() {
+    try {
+      const raw = localStorage.getItem(DOB_STORAGE_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (!saved || !saved.year || !saved.month || !saved.day) return;
+      yearInput.value = saved.year;
+      monthInput.value = saved.month;
+      dayInput.value = saved.day;
+    } catch (e) {
+      localStorage.removeItem(DOB_STORAGE_KEY);
+    }
+  }
+
+  function clearDob() {
+    yearInput.value = '';
+    monthInput.value = '';
+    dayInput.value = '';
+    localStorage.removeItem(DOB_STORAGE_KEY);
+    updateClearVisibility();
+    resultEl.classList.remove('visible');
+    yearInput.focus();
+  }
+
+  function renderGrid() {
+    yearSelect.value = viewYear;
+    monthSelect.value = viewMonth;
+
+    const selected = getSelected();
+    const firstWeekday = new Date(viewYear, viewMonth, 1).getDay();
+    const total = daysInMonth(viewYear, viewMonth + 1);
+
+    grid.innerHTML = '';
+    for (let i = 0; i < firstWeekday; i++) {
+      grid.appendChild(document.createElement('span'));
+    }
+    for (let d = 1; d <= total; d++) {
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = 'dob-day';
+      cell.textContent = d;
+      if (selected && selected.year === viewYear && selected.month === viewMonth + 1 && selected.day === d) {
+        cell.classList.add('dob-day-selected');
+        cell.setAttribute('aria-selected', 'true');
+      }
+      cell.addEventListener('click', () => {
+        yearInput.value = viewYear;
+        monthInput.value = viewMonth + 1;
+        dayInput.value = d;
+        saveDob();
+        updateClearVisibility();
+        closePopup();
+      });
+      grid.appendChild(cell);
+    }
+  }
+
+  function openPopup() {
+    const selected = getSelected();
+    const fallbackMonth = parseMonth(monthInput.value);
+    viewYear = selected ? selected.year : (Number(yearInput.value) || currentYear - 25);
+    viewMonth = selected ? selected.month - 1 : (fallbackMonth !== null ? fallbackMonth - 1 : 0);
+    popup.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    renderGrid();
+  }
+
+  function closePopup() {
+    popup.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  trigger.addEventListener('click', () => {
+    if (popup.hidden) openPopup(); else closePopup();
+  });
+
+  yearSelect.addEventListener('change', () => {
+    viewYear = Number(yearSelect.value);
+    renderGrid();
+  });
+
+  monthSelect.addEventListener('change', () => {
+    viewMonth = Number(monthSelect.value);
+    renderGrid();
+  });
+
+  [yearInput, monthInput, dayInput].forEach(el => {
+    el.addEventListener('input', () => {
+      if (!popup.hidden) renderGrid();
+      saveDob();
+      updateClearVisibility();
+    });
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btn.click();
+    });
+  });
+
+  dobClearBtn.addEventListener('click', clearDob);
+
+  document.addEventListener('click', (e) => {
+    if (!popup.hidden && !popup.contains(e.target) && !trigger.contains(e.target) &&
+      ![yearInput, monthInput, dayInput].includes(e.target)) closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !popup.hidden) closePopup();
+  });
+
+  const btn = document.getElementById('calculate');
+  const resultEl = document.getElementById('result');
+  const numberEl = document.getElementById('number');
+  const numberTitleEl = document.getElementById('numberTitle');
+  const meaningEl = document.getElementById('meaning');
+  const detailsEl = document.getElementById('details');
+  const figuresEl = document.getElementById('figures');
+  const breakdownEl = document.getElementById('breakdown');
+  const toggleBtn = document.getElementById('toggleBreakdown');
+  let breakdownShowing = false;
+
+  toggleBtn.addEventListener('click', () => {
+    breakdownShowing = breakdownEl.style.display === 'none';
+    breakdownEl.style.display = breakdownShowing ? 'block' : 'none';
+    toggleBtn.textContent = I18N.t(breakdownShowing ? 'hideWorking' : 'showWorking');
+  });
+
+  btn.addEventListener('click', () => {
+    const selected = getSelected();
+    if (!selected) {
+      const invalid = !yearInput.value || Number(yearInput.value) < 1900 || Number(yearInput.value) > currentYear
+        ? yearInput
+        : parseMonth(monthInput.value) === null ? monthInput : dayInput;
+      invalid.focus();
+      return;
+    }
+    saveDob();
+    const { year, month, day } = selected;
+    const { result, breakdown } = calculateLifePath(year, month, day);
+    const data = I18N.lifePathData()[result];
+
+    setDialActive(dial, result);
+
+    numberEl.textContent = result;
+    numberTitleEl.textContent = data ? data.title : '';
+    meaningEl.innerHTML = data ? data.meaning : '';
+
+    detailsEl.innerHTML = '';
+    if (data && data.details && data.details.length) {
+      detailsEl.appendChild(buildDetailsSection(data.details));
+    }
+
+    figuresEl.innerHTML = '';
+    if (data && data.figures.length) {
+      const label = document.createElement('div');
+      label.className = 'figures-label';
+      label.textContent = I18N.t('figuresLabel');
+      figuresEl.appendChild(label);
+      figuresEl.appendChild(buildPeopleSection(shuffledCopy(data.figures)));
+    }
+
+    breakdownEl.textContent = breakdown;
+    breakdownEl.style.display = 'none';
+    breakdownShowing = false;
+    toggleBtn.textContent = I18N.t('showWorking');
+    resultEl.classList.add('visible');
+  });
+
+  function applyTexts() {
+    document.getElementById('txtEyebrow').textContent = I18N.t('eyebrowIndex');
+    document.getElementById('txtTitle').textContent = I18N.t('titleIndex');
+    document.getElementById('txtSubtitle').textContent = I18N.t('subtitleIndex');
+    document.getElementById('dialWrap').setAttribute('aria-label', I18N.t('dialAriaLabel'));
+    document.getElementById('txtDialCaption').textContent = I18N.t('dialCaption');
+    document.getElementById('dobLabel').textContent = I18N.t('dobLabel');
+    dobClearBtn.textContent = I18N.t('dobClear');
+    document.getElementById('txtYearLabel').textContent = I18N.t('yearFieldLabel');
+    document.getElementById('txtMonthLabel').textContent = I18N.t('monthFieldLabel');
+    document.getElementById('txtDayLabel').textContent = I18N.t('dayFieldLabel');
+    trigger.setAttribute('aria-label', I18N.t('openCalendar'));
+    btn.textContent = I18N.t('calculateBtn');
+    toggleBtn.textContent = I18N.t(breakdownShowing ? 'hideWorking' : 'showWorking');
+    document.getElementById('txtFooter').textContent = I18N.t('footerIndex');
+
+    const weekdays = I18N.t('weekdayShort');
+    document.getElementById('dobWeekdays').innerHTML = weekdays.map(d => `<span>${d}</span>`).join('');
+    monthSelect.innerHTML = monthNames().map((name, i) => `<option value="${i}">${name}</option>`).join('');
+
+    if (!popup.hidden) renderGrid();
+
+    if (resultEl.classList.contains('visible')) {
+      btn.click();
+    }
+  }
+
+  I18N.init(() => {
+    applyTexts();
+  });
+
+  loadDob();
+  updateClearVisibility();
+</script>
+</body>
+</html>

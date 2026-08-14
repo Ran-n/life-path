@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Path Numbers Guide</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back" id="txtBackToSetDate"></a>
+    <div class="lang-picker">
+      <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span class="flag" id="lang-trigger-flag"></span>
+        <span id="lang-trigger-name"></span>
+        <span class="chevron">▾</span>
+      </button>
+      <ul class="lang-menu" id="lang-menu" role="listbox" hidden></ul>
+    </div>
+  </div>
+
+  <span class="eyebrow" id="txtEyebrow"></span>
+  <h1 id="txtTitle"></h1>
+  <p class="subtitle" id="txtSubtitle"></p>
+
+  <div id="filter-bar" class="filter-bar"></div>
+
+  <div id="list"></div>
+
+  <footer id="txtFooter"></footer>
+</div>
+
+<script src="data.js"></script>
+<script src="wheel.js"></script>
+<script src="i18n/engine.js"></script>
+<script src="i18n/en.js"></script>
+<script src="i18n/es.js"></script>
+<script src="i18n/gl.js"></script>
+<script src="i18n/zh.js"></script>
+<script src="i18n/hi.js"></script>
+<script src="i18n/ar.js"></script>
+<script src="i18n/fr.js"></script>
+<script src="i18n/bn.js"></script>
+<script src="i18n/pt.js"></script>
+<script src="i18n/ru.js"></script>
+<script src="i18n/ur.js"></script>
+<script src="i18n/id.js"></script>
+<script src="i18n/de.js"></script>
+<script src="i18n/ja.js"></script>
+<script src="i18n/sw.js"></script>
+<script src="i18n/te.js"></script>
+<script src="i18n/tr.js"></script>
+<script src="i18n/ta.js"></script>
+<script src="i18n/vi.js"></script>
+<script src="i18n/ko.js"></script>
+<script src="i18n/it.js"></script>
+<script src="i18n/fa.js"></script>
+<script src="i18n/pa.js"></script>
+<script src="i18n/th.js"></script>
+<script src="i18n/eo.js"></script>
+<script src="people.js"></script>
+<script>
+  const listEl = document.getElementById('list');
+  const filterBarEl = document.getElementById('filter-bar');
+
+  const selected = new Set();
+  let allChip;
+
+  function render() {
+    allChip.classList.toggle('filter-chip-active', selected.size === 0);
+    filterBarEl.querySelectorAll('.filter-chip[data-number]').forEach(chip => {
+      chip.classList.toggle('filter-chip-active', selected.has(Number(chip.dataset.number)));
+    });
+    listEl.querySelectorAll('.guide-card').forEach(card => {
+      card.hidden = selected.size > 0 && !selected.has(Number(card.dataset.number));
+    });
+  }
+
+  function buildFilterBar() {
+    filterBarEl.innerHTML = '';
+
+    allChip = document.createElement('button');
+    allChip.type = 'button';
+    allChip.className = 'filter-chip' + (selected.size === 0 ? ' filter-chip-active' : '');
+    allChip.textContent = I18N.t('filterAll');
+    allChip.addEventListener('click', () => {
+      selected.clear();
+      render();
+    });
+    filterBarEl.appendChild(allChip);
+
+    WHEEL_ORDER.forEach(n => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'filter-chip' + (selected.has(n) ? ' filter-chip-active' : '');
+      chip.textContent = n;
+      chip.dataset.number = n;
+      chip.addEventListener('click', () => {
+        if (selected.has(n)) {
+          selected.delete(n);
+        } else {
+          selected.add(n);
+        }
+        render();
+      });
+      filterBarEl.appendChild(chip);
+    });
+  }
+
+  function buildList() {
+    const data = I18N.lifePathData();
+    listEl.innerHTML = '';
+
+    WHEEL_ORDER.forEach(n => {
+      const item = data[n];
+
+      const card = document.createElement('div');
+      card.className = 'guide-card';
+      card.dataset.number = n;
+      card.hidden = selected.size > 0 && !selected.has(n);
+
+      const dial = buildMiniDial(n, 56);
+      card.appendChild(dial);
+
+      const body = document.createElement('div');
+      body.className = 'guide-body';
+
+      const strengthItems = item.strengths.map(s => `<li>${s}</li>`).join('');
+      const challengeItems = item.challenges.map(c => `<li>${c}</li>`).join('');
+      const compatItems = item.compatible.map(c => `<span class="compat-badge">${c}</span>`).join('');
+
+      body.innerHTML = `
+        <div class="guide-header">
+          <div class="num">${n}</div>
+          <div class="guide-heading">
+            <div class="title">${item.title}</div>
+            <div class="symbol">${item.symbol}</div>
+          </div>
+        </div>
+        <div class="guide-meaning">${item.meaning}</div>
+        <div class="trait-grid">
+          <div class="trait-col">
+            <div class="trait-label trait-label-strength">${I18N.t('strengthsLabel')}</div>
+            <ul class="trait-list trait-list-strength">${strengthItems}</ul>
+          </div>
+          <div class="trait-col">
+            <div class="trait-label trait-label-challenge">${I18N.t('challengesLabel')}</div>
+            <ul class="trait-list trait-list-challenge">${challengeItems}</ul>
+          </div>
+        </div>
+        <div class="compat-row">
+          <span class="compat-label">${I18N.t('pairsWellWith')}</span>
+          ${compatItems}
+        </div>
+      `;
+      body.appendChild(buildDetailsSection(item.details));
+      body.appendChild(buildPeopleSection(item.figures));
+      card.appendChild(body);
+
+      listEl.appendChild(card);
+    });
+  }
+
+  function applyTexts() {
+    document.getElementById('txtBackToSetDate').textContent = I18N.t('backToSetDate');
+    document.getElementById('txtEyebrow').textContent = I18N.t('eyebrowGuide');
+    document.getElementById('txtTitle').textContent = I18N.t('titleGuide');
+    document.getElementById('txtSubtitle').textContent = I18N.t('subtitleGuide');
+    document.getElementById('txtFooter').textContent = I18N.t('footerGuide');
+    buildFilterBar();
+    buildList();
+  }
+
+  I18N.init(() => {
+    applyTexts();
+  });
+</script>
+</body>
+</html>
