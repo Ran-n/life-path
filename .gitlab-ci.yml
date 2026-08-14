@@ -1,0 +1,10 @@
+pages:
+  stage: deploy
+  publish: src
+  script:
+    - echo "Publishing src/ as GitLab Pages"
+  artifacts:
+    paths:
+      - src
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
